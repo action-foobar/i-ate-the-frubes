@@ -4,11 +4,11 @@
 #   }
 # }
 
-provider "google-beta" {
-  project = "pleasedontfail"
+provider "google" {
+  project = "donefortheday"
 }
 locals {
-  project = "pleasedontfail"
+  project = "donefortheday"
 }
 
 module "lb-http" {
@@ -51,8 +51,8 @@ module "lb-http" {
 resource "google_compute_region_network_endpoint_group" "appengine_neg" {
   name                  = "appengine-neg"
   network_endpoint_type = "SERVERLESS"
-  region                = "europe-west"
-  project               = "pleasedontfail"
+  region                = "europe-west1"
+  project               = local.project
   app_engine {
     service = google_app_engine_standard_app_version.myapp_v1.service
     version = google_app_engine_standard_app_version.myapp_v1.version_id
@@ -63,10 +63,10 @@ resource "google_app_engine_standard_app_version" "myapp_v1" {
   version_id = "v1"
   service    = "myapp"
   runtime    = "nodejs16"
-  project = local.project
+  #project = local.project
 
   entrypoint {
-    shell = "node ./app.js"
+    shell = "npm start"
   }
 
   deployment {
@@ -112,7 +112,7 @@ resource "google_storage_bucket" "bucket" {
 }
 
 resource "google_storage_bucket_object" "object" {
-  name   = "hello-world.zip"
+  name   = "myapp.zip"
   bucket = google_storage_bucket.bucket.name
   source = "./sample.zip"
 }
