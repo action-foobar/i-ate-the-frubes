@@ -1,6 +1,7 @@
 name: tf-app-deploy
 env:
   TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
+  VAR_BASE_PATH: 'ci/infra/terraform/''
 
 on:
   workflow_dispatch:
@@ -27,6 +28,7 @@ jobs:
             location     = "europe-west"
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
+          var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
           backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveun.tfstate
   
   apply-dev-eun-layer3:
@@ -47,6 +49,7 @@ jobs:
             location     = "europe-north1"
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
+          var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
           backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveuw.tfstate #name interchange for regions (because of lack of common sense from me :D)
           
   # apply-layer4:
