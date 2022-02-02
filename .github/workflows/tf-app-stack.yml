@@ -14,9 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     name: apply-layer3
     env:
-      LAYER_NAME: layer-3
-      
-        
+      LAYER_NAME: layer-3  
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -28,5 +26,24 @@ jobs:
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
           backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveun.tfstate
+          
+  apply-layer4:
+    # if: ${{ inputs.TRIGGER_EVENT == 'push' }}
+    needs: apply-layer3
+    runs-on: ubuntu-latest
+    name: apply-layer4
+    env:
+      LAYER_NAME: layer-4 
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: apply
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/sample-app/nowwilltrymore-c1e2afe68da3.json
+        uses: dflook/terraform-apply@v1.22.1
+        with:
+          auto_approve: true
+          path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
+          backend_config: bucket=statestore-eu-first, prefix=layer-4-edge-deveun.tfstate
 
       
