@@ -1,4 +1,4 @@
-name: tf-app
+name: tf-app-deploy
 env:
   TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
 
@@ -12,7 +12,7 @@ jobs:
   apply-layer3:
     # if: ${{ inputs.TRIGGER_EVENT == 'push' }}
     runs-on: ubuntu-latest
-    name: deploy
+    name: apply-layer3
     env:
       LAYER_NAME: layer-3
       
@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: TF-Apply
+      - name: apply
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/sample-app/nowwilltrymore-c1e2afe68da3.json
         uses: dflook/terraform-apply@v1.22.1
