@@ -4,9 +4,13 @@ env:
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
-  app-deploy:
+  apply-layer3:
+    # if: ${{ inputs.TRIGGER_EVENT == 'push' }}
     runs-on: ubuntu-latest
     name: deploy
     env:
@@ -16,8 +20,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: GITHUB_WORKSPACE
-        run: echo ${GITHUB_WORKSPACE} 
       - name: TF-Apply
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/sample-app/nowwilltrymore-c1e2afe68da3.json
