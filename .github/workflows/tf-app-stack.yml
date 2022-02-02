@@ -1,7 +1,7 @@
 name: tf-app-deploy
 env:
   TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
-  VAR_BASE_PATH: 'ci/infra/terraform/''
+  VAR_BASE_PATH: 'ci/infra/terraform/'
 
 on:
   workflow_dispatch:
