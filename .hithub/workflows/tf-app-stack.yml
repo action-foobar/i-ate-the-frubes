@@ -1,0 +1,29 @@
+name: tf-app
+env:
+  TERRAFORM_BASE_PATH: 'ci/infra/terraform/layer-3'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  app-deploy:
+    runs-on: ubuntu-latest
+    name: deploy
+     env:
+      LAYER_NAME: layer-3
+      TERRAFORM_PRE_RUN: |
+        apt-get install apt-transport-https ca-certificates gnupg
+        apt-get update && sudo apt-get install google-cloud-sdk
+        
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: GCP: login
+        run : gcloud auth activate-service-account SERVICE_ACCOUNT@DOMAIN.COM --key-file=sample-app/nowwilltrymore-c1e2afe68da3.json --project=noideahowitworks
+      - name: TF: Apply
+        uses: dflook/terraform-apply@v1.22.1
+        with:
+          auto_approve: true
+          path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
+
+      
