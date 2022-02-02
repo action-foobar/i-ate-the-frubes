@@ -17,9 +17,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: TF-Apply
-        TERRAFORM_PRE_RUN: |
-          curl https://dl.google.com/dl/cloudsdk/release/install_google_cloud_sdk.bash | bash
-          gcloud auth activate-service-account --key-file=sample-app/nowwilltrymore-c1e2afe68da3.json --project=noideahowitworks
+        env:
+          TERRAFORM_PRE_RUN: |
+            curl https://dl.google.com/dl/cloudsdk/release/install_google_cloud_sdk.bash | bash
+            gcloud auth activate-service-account --key-file=sample-app/nowwilltrymore-c1e2afe68da3.json --project=noideahowitworks
         uses: dflook/terraform-apply@v1.22.1
         with:
           auto_approve: true
