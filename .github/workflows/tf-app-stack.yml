@@ -11,7 +11,6 @@ on:
 
 jobs:
   apply-dev-euw-layer3:
-    # if: ${{ inputs.TRIGGER_EVENT == 'push' }}
     runs-on: ubuntu-latest
     name: apply-euw-layer3
     env:
@@ -30,9 +29,8 @@ jobs:
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
           var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
           backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveun.tfstate
-  
+          
   apply-dev-eun-layer3:
-    # if: ${{ inputs.TRIGGER_EVENT == 'push' }}
     runs-on: ubuntu-latest
     name: apply-eun-layer3
     env:
