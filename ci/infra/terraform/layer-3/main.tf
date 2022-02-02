@@ -1,4 +1,3 @@
-
 terraform {
   backend "gcs" {
     
@@ -6,6 +5,6 @@ terraform {
 }
 
 resource "google_app_engine_application" "app" {
-  project     = "nowwilltrymore"
-  location_id = "europe-west"
+  project     = var.project
+  location_id = var.location
 }

@@ -7,7 +7,7 @@ terraform {
 module "gcs_buckets" {
   source  = "terraform-google-modules/cloud-storage/google"
   version = "~> 2.2"
-  project_id  = "nowwilltrymore"
+  project_id  = var.project
   names = ["first"]
   prefix = "statestore"
   # set_admin_roles = true
