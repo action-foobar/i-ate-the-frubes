@@ -1,6 +1,6 @@
 name: tf-app
 env:
-  TERRAFORM_BASE_PATH: 'ci/infra/terraform/layer-3'
+  TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
 
 on:
   workflow_dispatch:
