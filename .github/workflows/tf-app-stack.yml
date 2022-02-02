@@ -43,10 +43,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: getsecrets
-        run: echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > ${{ github.workspace }}/goo_app_creds      
+        env:
+            GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+        run: echo $GOOGLE_APPLICATION_CREDENTIALS >> GOOGLE_APPLICATION_CREDENTIALS.json    
       - name: apply
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/goo_app_creds
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/GOOGLE_APPLICATION_CREDENTIALS.json
         uses: dflook/terraform-apply@v1.22.1
         with:
           variables: |
