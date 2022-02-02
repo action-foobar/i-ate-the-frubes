@@ -16,11 +16,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: LS
-        run: ls -a sample-app
+      - name: GITHUB_WORKSPACE
+        run: echo ${GITHUB_WORKSPACE} 
       - name: TF-Apply
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: "sample-app/nowwilltrymore-c1e2afe68da3.json"
+          GOOGLE_APPLICATION_CREDENTIALS: "${GITHUB_WORKSPACE}/sample-app/nowwilltrymore-c1e2afe68da3.json"
         uses: dflook/terraform-apply@v1.22.1
         with:
           auto_approve: true
