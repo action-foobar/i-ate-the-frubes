@@ -9,7 +9,7 @@ jobs:
   app-deploy:
     runs-on: ubuntu-latest
     name: deploy
-     env:
+    env:
       LAYER_NAME: layer-3
       TERRAFORM_PRE_RUN: |
         apt-get install apt-transport-https ca-certificates gnupg
