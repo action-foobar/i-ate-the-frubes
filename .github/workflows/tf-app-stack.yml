@@ -29,7 +29,7 @@ jobs:
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
           var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
           backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveun.tfstate
-  
+          
   apply-dev-eun-layer3:
     runs-on: ubuntu-latest
     name: apply-eun-layer3
