@@ -29,7 +29,6 @@ jobs:
         with:
           variables: |
             location     = "europe-west"
-            app_name     = "notaclue-euw"
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
           var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
@@ -54,7 +53,6 @@ jobs:
         with:
           variables: |
             location     = "europe-central2"
-            app_name     = "notaclue-eun"
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
           var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
