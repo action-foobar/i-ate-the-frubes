@@ -19,7 +19,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: GCP-login
-        run : gcloud auth activate-service-account SERVICE_ACCOUNT@DOMAIN.COM --key-file=sample-app/nowwilltrymore-c1e2afe68da3.json --project=noideahowitworks
+        run : gcloud auth activate-service-account --key-file=sample-app/nowwilltrymore-c1e2afe68da3.json --project=noideahowitworks
       - name: TF-Apply
         uses: dflook/terraform-apply@v1.22.1
         with:
