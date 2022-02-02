@@ -12,7 +12,7 @@ jobs:
     env:
       LAYER_NAME: layer-3
       TERRAFORM_PRE_RUN: |
-        apt-get update && apt-get install google-cloud-sdk
+        curl https://dl.google.com/dl/cloudsdk/release/install_google_cloud_sdk.bash | bash
         
     steps:
       - name: Checkout
@@ -24,5 +24,6 @@ jobs:
         with:
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
+          backend_config: bucket=statestore-eu-first" -backend-config="prefix=layer-3-app-deveun.tfstate
 
       
