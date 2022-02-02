@@ -52,7 +52,7 @@ jobs:
         uses: dflook/terraform-apply@v1.22.1
         with:
           variables: |
-            location     = "europe-north"
+            location     = "europe-central2"
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
           var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
