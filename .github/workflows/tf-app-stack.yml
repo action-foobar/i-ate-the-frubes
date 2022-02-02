@@ -23,6 +23,6 @@ jobs:
         with:
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
-          backend_config: bucket=statestore-eu-first" -backend-config="prefix=layer-3-app-deveun.tfstate
+          backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveun.tfstate
 
       
