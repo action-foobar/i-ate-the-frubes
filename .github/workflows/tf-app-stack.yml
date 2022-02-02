@@ -22,7 +22,7 @@ jobs:
         env:
           TERRAFORM_PRE_RUN: |
             echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > ${{ github.workspace }}/goo_app_creds
-            GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/goo_app_creds
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/goo_app_creds
         uses: dflook/terraform-apply@v1.22.1
         with:
           variables: |
@@ -44,7 +44,7 @@ jobs:
         env:
           TERRAFORM_PRE_RUN: |
             echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > ${{ github.workspace }}/goo_app_creds
-            GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/goo_app_creds
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/goo_app_creds
         uses: dflook/terraform-apply@v1.22.1
         with:
           variables: |
