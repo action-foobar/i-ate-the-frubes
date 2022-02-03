@@ -4,6 +4,7 @@ env:
   PACKAGE_LOCATION: ./sample.zip
   TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
   VAR_BASE_PATH: 'ci/infra/terraform/'
+  FRUBEPATH: 'whatthefudgeshouldiread'
 
 on:
   workflow_dispatch:
@@ -22,15 +23,19 @@ jobs:
           repository: action-foobar/whatthefudgeshouldiread
           token: ${{ secrets.SAML_GITHUB_TOKEN }}
           ref: main
-          path: whatthefudgeshouldiread
+          path: ${{ env.FRUBEPATH }}
       - name: Build
-        run: npm install
+        run: |
+          cd ${{ env.FRUBEPATH }}
+          npm install
       - name: Setup NodeJs
         uses: actions/setup-node@v2
         with:
           node-version: ${{ env.NODE_VERSION }}
       - name: Zip Web App package
-        run: zip -r ${{ env.PACKAGE_LOCATION }} . --exclude @.zipignore --exclude .zipignore
+        run: 
+          zip -r ${{ env.FRUBEPATH }}/${{ env.PACKAGE_LOCATION }} . --exclude @.zipignore --exclude .zipignore
+          cp ${{ env.FRUBEPATH }}/${{ env.PACKAGE_LOCATION }} .
       - uses: actions/upload-artifact@v2
         with:
           name: build-artifact-${{ github.sha }}
