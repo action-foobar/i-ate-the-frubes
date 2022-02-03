@@ -41,6 +41,7 @@ jobs:
 
   apply-dev-euw-layer3:
     runs-on: ubuntu-latest
+    needs: [build]
     name: apply-euw-layer3
     env:
       LAYER_NAME: layer-3  
