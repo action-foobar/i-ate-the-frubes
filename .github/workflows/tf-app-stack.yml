@@ -34,7 +34,7 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
       - name: Zip Web App package
         run: 
-          zip -r ${{ env.FRUBEPATH }}/${{ env.PACKAGE_LOCATION }} . --exclude @.zipignore --exclude .zipignore
+          zip -r ${{ env.FRUBEPATH }}/${{ env.PACKAGE_LOCATION }} .
           cp ${{ env.FRUBEPATH }}/${{ env.PACKAGE_LOCATION }} .
       - uses: actions/upload-artifact@v2
         with:
