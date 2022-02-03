@@ -1,5 +1,7 @@
 name: tf-app-deploy
 env:
+  NODE_VERSION: 14.x
+  PACKAGE_LOCATION: ./sample.zip
   TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
   VAR_BASE_PATH: 'ci/infra/terraform/'
 
@@ -10,14 +12,47 @@ on:
       - main
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: action-foobar/whatthefudgeshouldiread
+          token: ${{ secrets.SAML_GITHUB_TOKEN }}
+          ref: main
+          path: whatthefudgeshouldiread
+      - name: Build
+        run: npm install
+      - name: Setup NodeJs
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - name: Zip Web App package
+        run: zip -r ${{ env.PACKAGE_LOCATION }} . --exclude @.zipignore --exclude .zipignore
+      - uses: actions/upload-artifact@v2
+        with:
+          name: build-artifact-${{ github.sha }}
+          path: |
+            ${{ env.PACKAGE_LOCATION }}
+            dist
+            version 
+
   apply-dev-euw-layer3:
     runs-on: ubuntu-latest
     name: apply-euw-layer3
     env:
       LAYER_NAME: layer-3  
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: build-artifact-${{ github.sha }}
+      - name: move stuff
+        run: |
+          cp ${{ env.PACKAGE_LOCATION }} ci/infra/terraform/layer-3/        
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v2      
       - name: getsecrets
         env:
             GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
@@ -31,50 +66,6 @@ jobs:
             location     = "europe-west"
           auto_approve: true
           path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
-          var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
-          backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveun.tfstate
-          
-  apply-dev-eun-layer3:
-    runs-on: ubuntu-latest
-    name: apply-eun-layer3
-    env:
-      LAYER_NAME: layer-3  
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: getsecrets
-        env:
-            GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-        run: echo $GOOGLE_APPLICATION_CREDENTIALS >> GOOGLE_APPLICATION_CREDENTIALS.json    
-      - name: apply
-        env:
-          GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/GOOGLE_APPLICATION_CREDENTIALS.json
-        uses: dflook/terraform-apply@v1.22.1
-        with:
-          variables: |
-            location     = "europe-central2"
-          auto_approve: true
-          path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
-          var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
-          backend_config: bucket=statestore-eu-first, prefix=layer-3-app-deveuw.tfstate #name interchange for regions (because of lack of common sense from me :D)
-          
-  # apply-layer4:
-  #   # if: ${{ inputs.TRIGGER_EVENT == 'push' }}
-  #   needs: apply-layer3
-  #   runs-on: ubuntu-latest
-  #   name: apply-layer4
-  #   env:
-  #     LAYER_NAME: layer-4 
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v2
-  #     - name: apply
-  #       env:
-  #         GOOGLE_APPLICATION_CREDENTIALS: ${{ github.workspace }}/sample-app/nowwilltrymore-c1e2afe68da3.json
-  #       uses: dflook/terraform-apply@v1.22.1
-  #       with:
-  #         auto_approve: true
-  #         path: ${{ env.TERRAFORM_BASE_PATH }}/${{ env.LAYER_NAME }}
-  #         backend_config: bucket=statestore-eu-first, prefix=layer-4-edge-deveun.tfstate
+#          var_file: ${{ env.VAR_BASE_PATH }}/vars/common.tfvars
+          backend_config: bucket=statestore-eu-donefortheday, prefix=layer-3-app-deveuw.tfstate
 
-      
