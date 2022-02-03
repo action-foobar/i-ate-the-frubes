@@ -78,6 +78,7 @@ resource "google_app_engine_standard_app_version" "myapp_v1" {
 
   env_variables = {
     port = "8080"
+    REGION = var.REGION
   }
 
   automatic_scaling {

@@ -40,3 +40,7 @@ variable "lb-name" {
   default     = "run-lb"
 }
 
+variable "REGION" {
+  description = "Region for Cloud Run resources"
+  default     = "europe-west1"
+}
