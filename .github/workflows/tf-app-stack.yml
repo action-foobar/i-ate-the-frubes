@@ -1,7 +1,7 @@
 name: tf-app-deploy
 env:
   NODE_VERSION: 14.x
-  PACKAGE_LOCATION: ./sample.zip
+  PACKAGE_LOCATION: sample.zip
   TERRAFORM_BASE_PATH: 'ci/infra/terraform/'
   VAR_BASE_PATH: 'ci/infra/terraform/'
   FRUBEPATH: 'whatthefudgeshouldiread'
@@ -40,7 +40,7 @@ jobs:
         with:
           name: build-artifact-${{ github.sha }}
           path: |
-            ${{ env.PACKAGE_LOCATION }}
+            ./${{ env.PACKAGE_LOCATION }}
             dist
             version 
 
