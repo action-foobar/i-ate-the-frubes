@@ -51,14 +51,14 @@ jobs:
     env:
       LAYER_NAME: layer-3  
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2     
       - uses: actions/download-artifact@v2
         with:
           name: build-artifact-${{ github.sha }}
       - name: move stuff
         run: |
-          cp ${{ env.PACKAGE_LOCATION }} ci/infra/terraform/layer-3/        
-      - name: Checkout
-        uses: actions/checkout@v2      
+          cp ${{ env.PACKAGE_LOCATION }} ci/infra/terraform/layer-3/         
       - name: getsecrets
         env:
             GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
