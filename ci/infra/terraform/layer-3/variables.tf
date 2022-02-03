@@ -20,7 +20,7 @@ variable "project_id" {
 }
 variable "region" {
   description = "Location for load balancer and Cloud Run resources"
-  default     = "europe-west"
+  default     = "gcp-europe-west1"
 }
 
 variable "ssl" {
