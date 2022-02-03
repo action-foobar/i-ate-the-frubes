@@ -10,16 +10,18 @@ provider "google" {
 locals {
   project = "donefortheday"
   file = "./sample.zip"
+  # domain = null
+  domain = "redpill.thereisnocloud.stevengonsalvez.com"
 }
 
 module "lb-http" {
   source  = "GoogleCloudPlatform/lb-http/google//modules/serverless_negs"
   version = "~> 5.1"
-  name    = "tf-cr-lb"
+  name    = "tf-myapp-lb"
   project = local.project
 
   ssl                             = var.ssl
-  managed_ssl_certificate_domains = [var.domain]
+  managed_ssl_certificate_domains = [local.domain]
   https_redirect                  = var.ssl
 
   backends = {
@@ -137,14 +139,14 @@ resource "google_storage_bucket_object" "object" {
 # }
 
 resource "google_dns_managed_zone" "example" {
-  name     = "whoatemyfrubes"
+  name     = "thereisnocloud"
   dns_name = "stevengonsalvez.com."
 }
 
 resource "google_dns_record_set" "example" {
   managed_zone = google_dns_managed_zone.example.name
 
-  name    = "fudge.${google_dns_managed_zone.example.name}.${google_dns_managed_zone.example.dns_name}"
+  name    = "redpill.${google_dns_managed_zone.example.name}.${google_dns_managed_zone.example.dns_name}"
   type    = "A"
   rrdatas = [module.lb-http.external_ip]
   ttl     = 300

@@ -29,11 +29,12 @@ variable "ssl" {
   default     = true
 }
 
-variable "domain" {
-  description = "Domain name to run the load balancer on. Used if `ssl` is `true`."
-  type        = string
-  default     = "fudge.whoatemyfrubes.stevengonsalvez.com"
-}
+# variable "domain" {
+#   description = "Domain name to run the load balancer on. Used if `ssl` is `true`."
+#   type        = string
+#   #default     = "notme.whoatemyfrubes.stevengonsalvez.com"
+#   #default = null
+# }
 
 variable "lb-name" {
   description = "Name for load balancer and associated resources"
